@@ -28,7 +28,9 @@ export default function RootLayout({ children }) {
           <header>
             <NavBar></NavBar>
           </header>
-          <main>{children}</main>
+          <main className="py-2 px-2 border md:max-w-11/12 mx-auto min-h-[calc(100svh-302px)]">
+            {children}
+          </main>
           <footer>
             <Footer></Footer>
           </footer>
