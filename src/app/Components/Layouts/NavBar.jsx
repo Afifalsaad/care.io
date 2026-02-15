@@ -87,7 +87,7 @@ const NavBar = () => {
             className="text-primary hidden sm:block font-medium text-[15px]">
             Log in
           </a>
-          <button className="px-4 py-2 text-sm rounded-md font-medium text-primary-foreground bg-primary hover:opacity-90 transition-all cursor-pointer">
+          <button className="px-4 py-2 text-sm rounded-md font-medium text-primary-foreground bg-secondary hover:opacity-90 transition-all cursor-pointer">
             Start free trial
           </button>
 
