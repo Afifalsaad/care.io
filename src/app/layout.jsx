@@ -25,10 +25,10 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <Providers>
-          <header>
+          <header className="sticky top-0 z-50">
             <NavBar></NavBar>
           </header>
-          <main className="py-2 px-2 border md:max-w-300 mx-auto min-h-[calc(100svh-302px)]">
+          <main className="md:max-w-300 mx-auto min-h-[calc(100svh-302px)]">
             {children}
           </main>
           <footer>

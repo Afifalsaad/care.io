@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import { ThemeToggle } from "../ThemeSwitcher/ThemeSwitcher";
 import Link from "next/link";
-import Image from "next/image";
 
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,7 +11,7 @@ const NavBar = () => {
   };
 
   return (
-    <header className="border-b border-border py-4 px-2 min-h-17.5 tracking-wide relative z-50 bg-background text-foreground">
+    <header className="sticky top-0 border-b bg-background/95 border-border py-4 px-2 min-h-16 tracking-wide z-50 ">
       <div className="flex flex-wrap items-center gap-4 w-full max-w-7xl mx-auto">
         {/* Logo Section */}
         <Link href="/" className="max-sm:hidden">

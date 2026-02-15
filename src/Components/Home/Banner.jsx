@@ -4,7 +4,7 @@ const Banner = () => {
   return (
     <div>
       <div
-        className="relative bg-no-repeat bg-center bg-cover z-50 before:absolute before:inset-0 before:bg-black/70"
+        className="relative bg-no-repeat bg-center bg-cover z-40 before:absolute before:inset-0 before:bg-black/70"
         style={{
           backgroundImage: "url('/BannerImg.png')",
         }}>
@@ -13,10 +13,12 @@ const Banner = () => {
             <div className="max-w-4xl mx-auto text-center relative z-10">
               <h1 className="text-white md:text-5xl text-4xl font-bold mb-6 leading-tight!">
                 Professional Care for Every Generation{" "}
-                <span className="text-orange-500">of Your Family</span>
+                <span className="text-secondary">of Your Family</span>
               </h1>
               <p className="text-base text-slate-200 leading-relaxed">
-              Providing safe, compassionate, and reliable care for your children and elderly loved ones, ensuring comfort, dignity, and peace of mind whenever you need trusted support at home.
+                Providing safe, compassionate, and reliable care for your
+                children and elderly loved ones, ensuring comfort, dignity, and
+                peace of mind whenever you need trusted support at home.
               </p>
 
               <div className="max-w-xl mx-auto mt-12">
