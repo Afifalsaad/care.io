@@ -7,13 +7,14 @@ const AboutUs = () => {
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-20">
           {/* Header */}
-          <div className="text-center max-w-3xl mx-auto mb-12">
-            <h2 className="text-3xl sm:text-4xl font-bold text-primary mb-4">
+          <div className="text-center max-w-3xl mb-12">
+            <h2 className="text-2xl font-bold text-left text-primary mb-4">
               About Our Care Services
             </h2>
-            <p className="text-primary sm:text-lg">
+            <p className="text-primary sm:text-sm text-left">
               We provide trusted babysitting and elderly care services, ensuring
-              safety, comfort, and compassion for your loved ones at home.
+              safety, <br /> comfort, and compassion for your loved ones at
+              home.
             </p>
           </div>
 

@@ -46,7 +46,7 @@ const NavBar = () => {
               <li className="mb-6 hidden max-lg:block">
                 <h2 className="text-2xl font-bold">care.IO</h2>
               </li>
-              {["Home", "Shop", "Sale", "Manage"].map((item) => (
+              {/* {["Home", "Shop", "Sale", "Manage"].map((item) => (
                 <li
                   key={item}
                   className="max-lg:border-b max-lg:border-border max-lg:pb-2">
@@ -56,8 +56,10 @@ const NavBar = () => {
                     {item}
                   </a>
                 </li>
-              ))}
-              <li></li>
+              ))} */}
+              <li>
+                <Link href={"/services"}>Services</Link>
+              </li>
             </ul>
 
             <ul className="lg:flex lg:items-center ml-auto max-lg:block lg:space-x-8 max-lg:mt-4">

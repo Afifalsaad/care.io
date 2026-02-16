@@ -1,5 +1,6 @@
 import AboutUs from "@/Components/Home/AboutUs";
 import Banner from "@/Components/Home/Banner";
+import ServiceCard from "@/Components/Home/ServiceCard";
 
 export default function Home() {
   return (
@@ -9,6 +10,9 @@ export default function Home() {
       </section>
       <section>
         <AboutUs></AboutUs>
+      </section>
+      <section>
+        <ServiceCard></ServiceCard>
       </section>
     </div>
   );
