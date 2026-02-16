@@ -10,6 +10,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { dbConnect } from "@/lib/dbConnect";
+import Image from "next/image";
+import Link from "next/link";
 
 const ServiceCard = async () => {
   const [result] = await dbConnect.execute("select * from services");
@@ -18,25 +20,29 @@ const ServiceCard = async () => {
     <div className="grid grid-cols-1 md:grid-cols-3">
       {result.map((service) => (
         <div key={service.id}>
-          <Card className="relative mx-auto w-full max-w-sm pt-0">
-            <div className="absolute inset-0 z-30 aspect-video bg-black/35" />
-            <img
-              src="https://avatar.vercel.sh/shadcn1"
-              alt="Event cover"
-              className="relative z-20 aspect-video w-full object-cover brightness-60 grayscale dark:brightness-40"
-            />
+          <Card className="relative mx-auto w-full max-w-sm pt-0 overflow-hidden">
+            <div className="relative w-full h-50">
+              <Image
+                alt={service.title}
+                src={service.image}
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 33vw"
+              />
+            </div>
+
             <CardHeader>
               <CardAction>
                 {/* <Badge variant="secondary">Featured</Badge> */}
               </CardAction>
-              <CardTitle>{service.title}</CardTitle>
-              <CardDescription>
-                A practical talk on component APIs, accessibility, and shipping
-                faster.
-              </CardDescription>
+              <CardTitle className="mt-2">{service.title}</CardTitle>
+              <CardDescription>{service.short_description}</CardDescription>
             </CardHeader>
+
             <CardFooter>
-              <Button className="w-full">View Event</Button>
+              <Link href={`services/${service.id}`}>
+                <Button className="w-full bg-secondary">View Service</Button>
+              </Link>
             </CardFooter>
           </Card>
         </div>
