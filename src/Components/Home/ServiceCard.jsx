@@ -1,5 +1,4 @@
 import React from "react";
-// import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -15,7 +14,6 @@ import Link from "next/link";
 
 const ServiceCard = async () => {
   const [result] = await dbConnect.execute("select * from services");
-  console.log(result);
   return (
     <div className="grid grid-cols-1 md:grid-cols-3">
       {result.map((service) => (
@@ -41,7 +39,9 @@ const ServiceCard = async () => {
 
             <CardFooter>
               <Link href={`services/${service.id}`}>
-                <Button className="w-full bg-secondary">View Service</Button>
+                <Button className="w-full bg-secondary hover:cursor-pointer">
+                  View Service
+                </Button>
               </Link>
             </CardFooter>
           </Card>

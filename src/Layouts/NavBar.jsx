@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { ThemeToggle } from "../ThemeSwitcher/ThemeSwitcher";
+import { ThemeToggle } from "../Components/ThemeSwitcher/ThemeSwitcher";
 import Link from "next/link";
 
 const NavBar = () => {
@@ -46,36 +46,12 @@ const NavBar = () => {
               <li className="mb-6 hidden max-lg:block">
                 <h2 className="text-2xl font-bold">care.IO</h2>
               </li>
-              {/* {["Home", "Shop", "Sale", "Manage"].map((item) => (
-                <li
-                  key={item}
-                  className="max-lg:border-b max-lg:border-border max-lg:pb-2">
-                  <a
-                    href="#"
-                    className="text-primary block font-medium text-[15px]">
-                    {item}
-                  </a>
-                </li>
-              ))} */}
-              <li>
-                <Link href={"/services"}>Services</Link>
-              </li>
-            </ul>
-
-            <ul className="lg:flex lg:items-center ml-auto max-lg:block lg:space-x-8 max-lg:mt-4">
               <li className="max-lg:border-b max-lg:border-border max-lg:pb-2">
-                <a
-                  href="#"
-                  className="text-primary block font-medium text-[15px]">
-                  Pricing
-                </a>
-              </li>
-              <li className="max-lg:border-b max-lg:border-border max-lg:pb-2 max-lg:mt-4">
-                <a
-                  href="#"
-                  className="text-primary block font-medium text-[15px]">
-                  Learn
-                </a>
+                <Link
+                  className="text-primary block font-medium text-[15px]"
+                  href={"/services"}>
+                  Services
+                </Link>
               </li>
             </ul>
           </div>
@@ -83,14 +59,11 @@ const NavBar = () => {
 
         {/* Right Side Buttons */}
         <div className="flex items-center ml-auto space-x-4">
-          <a
-            href="#"
-            className="text-primary hidden sm:block font-medium text-[15px]">
-            Log in
-          </a>
-          <button className="px-4 py-2 text-sm rounded-md font-medium text-primary-foreground bg-secondary hover:opacity-90 transition-all cursor-pointer">
-            Start free trial
-          </button>
+          <Link href="/login">
+            <button className="px-4 py-2 text-sm rounded-md font-medium text-primary-foreground bg-secondary hover:opacity-90 transition-all cursor-pointer">
+              Log in
+            </button>
+          </Link>
 
           {/* Hamburger Menu Icon (Mobile Only) */}
           <button onClick={toggleMenu} className="lg:hidden cursor-pointer">

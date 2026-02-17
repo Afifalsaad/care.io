@@ -17,7 +17,6 @@ const ServiceDetails = async ({ params }) => {
       <div className="min-h-screen bg-background py-12 px-4">
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-            {/* বাম পাশে ইমেজ সেকশন */}
             <div className="relative aspect-square md:aspect-video lg:aspect-square rounded-2xl overflow-hidden border border-slate-800 shadow-2xl">
               <Image
                 src={result.image}
@@ -33,7 +32,6 @@ const ServiceDetails = async ({ params }) => {
               </div>
             </div>
 
-            {/* ডান পাশে কন্টেন্ট সেকশন */}
             <div className="space-y-6">
               <div>
                 <h1 className="text-4xl md:text-5xl font-bold text-secondary mb-4">

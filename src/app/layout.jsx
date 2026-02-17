@@ -1,8 +1,8 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import NavBar from "./Components/Layouts/NavBar";
+import NavBar from "../Layouts/NavBar";
 import { Providers } from "./Provider";
-import Footer from "./Components/Layouts/Footer";
+import Footer from "../Layouts/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,9 +28,7 @@ export default function RootLayout({ children }) {
           <header className="sticky top-0 z-50">
             <NavBar></NavBar>
           </header>
-          <main className="md:max-w-300 mx-auto min-h-[calc(100svh-302px)]">
-            {children}
-          </main>
+          <main className="md:max-w-300 mx-auto">{children}</main>
           <footer>
             <Footer></Footer>
           </footer>

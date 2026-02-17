@@ -4,7 +4,7 @@ import React from "react";
 
 const Services = async () => {
   return (
-    <div>
+    <div className="mt-20">
       <ServiceCard></ServiceCard>
     </div>
   );
