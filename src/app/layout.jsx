@@ -3,6 +3,7 @@ import "./globals.css";
 import NavBar from "../Layouts/NavBar";
 import { Providers } from "./Provider";
 import Footer from "../Layouts/Footer";
+import NextAuthProvider from "@/provider/NextAuthProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -21,7 +22,8 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+   <NextAuthProvider>
+     <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <Providers>
@@ -35,5 +37,6 @@ export default function RootLayout({ children }) {
         </Providers>
       </body>
     </html>
+   </NextAuthProvider>
   );
 }

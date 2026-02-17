@@ -1,5 +1,6 @@
 "use client";
 import { postUser } from "@/actions/Server/data";
+import { signIn } from "next-auth/react";
 import React from "react";
 import { useForm } from "react-hook-form";
 
@@ -12,6 +13,10 @@ const RegistrationForm = () => {
       alert("user info added successfully");
     }
   };
+
+  const handleGoogleSignIn = async () => {
+    await signIn("google");
+  };
   return (
     <div>
       <div>
@@ -22,13 +27,11 @@ const RegistrationForm = () => {
         </div>
 
         <div className="mx-4 mb-4 -mt-20">
-          <form
-            onSubmit={handleSubmit(onSubmit)}
-            className="max-w-4xl max-md:max-w-xl mx-auto bg-background [box-shadow:0_2px_13px_-6px_rgba(0,0,0,0.4)] sm:p-8 p-4 rounded-md">
-            <div className="grid md:grid-cols-2 gap-6">
+          <div className="max-w-4xl max-md:max-w-xl mx-auto bg-background [box-shadow:0_2px_13px_-6px_rgba(0,0,0,0.4)] sm:p-8 p-4 rounded-md">
+            <div className="grid md:grid-cols-2 gap-6 max-w-4xl max-md:max-w-xl mx-auto">
               <button
-                type="button"
-                className="w-full px-4 py-2.5 flex items-center justify-center rounded-md  text-sm font-medium tracking-wider cursor-pointer border-0 outline-0  hover:bg-slate-200">
+                onClick={handleGoogleSignIn}
+                className="w-full bg-white px-4 py-2.5 flex items-center justify-center rounded-md  text-sm font-medium tracking-wider cursor-pointer border-0 outline-0 text-black hover:bg-slate-200">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="22px"
@@ -85,87 +88,88 @@ const RegistrationForm = () => {
                 Continue with Apple
               </button>
             </div>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <div className="my-6 flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-neutral-300 after:mt-0.5 after:flex-1 after:border-t after:border-neutral-300">
+                <p className="mx-4 text-center text-slate-500">Or</p>
+              </div>
 
-            <div className="my-6 flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-neutral-300 after:mt-0.5 after:flex-1 after:border-t after:border-neutral-300">
-              <p className="mx-4 text-center text-slate-500">Or</p>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-8">
-              <div>
-                <label className=" text-sm font-medium mb-2 block">
-                  First Name
-                </label>
-                <input
-                  {...register("firstName")}
-                  type="text"
-                  className=" focus:bg-transparent w-full text-sm  px-4 py-2.5 rounded-sm border border-gray-200 focus:border-blue-600 outline-0 transition-all"
-                  placeholder="Enter name"
-                />
+              <div className="grid md:grid-cols-2 gap-8">
+                <div>
+                  <label className=" text-sm font-medium mb-2 block">
+                    First Name
+                  </label>
+                  <input
+                    {...register("firstName")}
+                    type="text"
+                    className=" focus:bg-transparent w-full text-sm  px-4 py-2.5 rounded-sm border border-gray-200 focus:border-blue-600 outline-0 transition-all"
+                    placeholder="Enter name"
+                  />
+                </div>
+                <div>
+                  <label className=" text-sm font-medium mb-2 block">
+                    Last Name
+                  </label>
+                  <input
+                    {...register("lastName")}
+                    type="text"
+                    className=" focus:bg-transparent w-full text-sm  px-4 py-2.5 rounded-sm border border-gray-200 focus:border-blue-600 outline-0 transition-all"
+                    placeholder="Enter last name"
+                  />
+                </div>
+                <div>
+                  <label className=" text-sm font-medium mb-2 block">
+                    Email Id
+                  </label>
+                  <input
+                    {...register("email")}
+                    type="text"
+                    className=" focus:bg-transparent w-full text-sm  px-4 py-2.5 rounded-sm border border-gray-200 focus:border-blue-600 outline-0 transition-all"
+                    placeholder="Enter email"
+                  />
+                </div>
+                <div>
+                  <label className=" text-sm font-medium mb-2 block">
+                    Mobile No.
+                  </label>
+                  <input
+                    {...register("number")}
+                    type="number"
+                    className=" focus:bg-transparent w-full text-sm  px-4 py-2.5 rounded-sm border border-gray-200 focus:border-blue-600 outline-0 transition-all"
+                    placeholder="Enter mobile number"
+                  />
+                </div>
+                <div>
+                  <label className=" text-sm font-medium mb-2 block">
+                    Password
+                  </label>
+                  <input
+                    {...register("password")}
+                    type="password"
+                    className=" focus:bg-transparent w-full text-sm  px-4 py-2.5 rounded-sm border border-gray-200 focus:border-blue-600 outline-0 transition-all"
+                    placeholder="Enter password"
+                  />
+                </div>
+                <div>
+                  <label className=" text-sm font-medium mb-2 block">
+                    Confirm Password
+                  </label>
+                  <input
+                    {...register("cPassword")}
+                    type="password"
+                    className=" focus:bg-transparent w-full text-sm  px-4 py-2.5 rounded-sm border border-gray-200 focus:border-blue-600 outline-0 transition-all"
+                    placeholder="Enter confirm password"
+                  />
+                </div>
               </div>
-              <div>
-                <label className=" text-sm font-medium mb-2 block">
-                  Last Name
-                </label>
-                <input
-                  {...register("lastName")}
-                  type="text"
-                  className=" focus:bg-transparent w-full text-sm  px-4 py-2.5 rounded-sm border border-gray-200 focus:border-blue-600 outline-0 transition-all"
-                  placeholder="Enter last name"
-                />
+              <div className="mt-8">
+                <button
+                  type="submit"
+                  className="w-full py-2.5 px-5 text-sm font-medium tracking-wider rounded-sm cursor-pointer text-white bg-secondary focus:outline-0">
+                  Sign up
+                </button>
               </div>
-              <div>
-                <label className=" text-sm font-medium mb-2 block">
-                  Email Id
-                </label>
-                <input
-                  {...register("email")}
-                  type="text"
-                  className=" focus:bg-transparent w-full text-sm  px-4 py-2.5 rounded-sm border border-gray-200 focus:border-blue-600 outline-0 transition-all"
-                  placeholder="Enter email"
-                />
-              </div>
-              <div>
-                <label className=" text-sm font-medium mb-2 block">
-                  Mobile No.
-                </label>
-                <input
-                  {...register("number")}
-                  type="number"
-                  className=" focus:bg-transparent w-full text-sm  px-4 py-2.5 rounded-sm border border-gray-200 focus:border-blue-600 outline-0 transition-all"
-                  placeholder="Enter mobile number"
-                />
-              </div>
-              <div>
-                <label className=" text-sm font-medium mb-2 block">
-                  Password
-                </label>
-                <input
-                  {...register("password")}
-                  type="password"
-                  className=" focus:bg-transparent w-full text-sm  px-4 py-2.5 rounded-sm border border-gray-200 focus:border-blue-600 outline-0 transition-all"
-                  placeholder="Enter password"
-                />
-              </div>
-              <div>
-                <label className=" text-sm font-medium mb-2 block">
-                  Confirm Password
-                </label>
-                <input
-                  {...register("cPassword")}
-                  type="password"
-                  className=" focus:bg-transparent w-full text-sm  px-4 py-2.5 rounded-sm border border-gray-200 focus:border-blue-600 outline-0 transition-all"
-                  placeholder="Enter confirm password"
-                />
-              </div>
-            </div>
-            <div className="mt-8">
-              <button
-                type="submit"
-                className="w-full py-2.5 px-5 text-sm font-medium tracking-wider rounded-sm cursor-pointer text-white bg-secondary focus:outline-0">
-                Sign up
-              </button>
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
       </div>
     </div>
