@@ -1,10 +1,23 @@
+"use server";
 import { dbConnect } from "@/lib/dbConnect";
-
-export const getDetails = async (id) => {
+import { NextResponse } from "next/server";
+export const postUser = async (payload) => {
   try {
-    const connection = await dbConnect.getConnection();
-    console.log("Connected Successfully");
-    connection.release();
+    const { firstName, lastName, email, number, password } = payload;
+    console.log(payload);
+    const query = `
+  INSERT INTO users (firstName, lastName, email, number, password)
+  VALUES (?, ?, ?, ?, ?)
+`;
+
+    await dbConnect.execute(query, [
+      firstName,
+      lastName,
+      email,
+      number,
+      password,
+    ]);
+    return { success: true };
   } catch (err) {
     console.log("Something went wrong", err);
   }
