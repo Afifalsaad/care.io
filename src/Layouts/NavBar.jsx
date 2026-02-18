@@ -3,10 +3,11 @@ import React, { useState } from "react";
 import { ThemeToggle } from "../Components/ThemeSwitcher/ThemeSwitcher";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
+import AuthButton from "@/Components/Buttons/AuthButtons";
 
 const NavBar = () => {
   const user = useSession();
-  console.log(user?.data?.user);
+  console.log(user);
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -62,11 +63,7 @@ const NavBar = () => {
 
         {/* Right Side Buttons */}
         <div className="flex items-center ml-auto space-x-4">
-          <Link href="/login">
-            <button className="px-4 py-2 text-sm rounded-md font-medium text-primary-foreground bg-secondary hover:opacity-90 transition-all cursor-pointer">
-              Log in
-            </button>
-          </Link>
+          <AuthButton></AuthButton>
 
           {/* Hamburger Menu Icon (Mobile Only) */}
           <button onClick={toggleMenu} className="lg:hidden cursor-pointer">

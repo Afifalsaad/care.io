@@ -3,7 +3,6 @@ import { dbConnect } from "@/lib/dbConnect";
 export const postUser = async (payload) => {
   try {
     const { firstName, lastName, email, number, password } = payload;
-    console.log(payload);
     const query = `INSERT INTO users (firstName, lastName, email, number, password)
   VALUES (?, ?, ?, ?, ?)`;
 

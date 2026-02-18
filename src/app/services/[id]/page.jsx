@@ -11,7 +11,6 @@ const ServiceDetails = async ({ params }) => {
     `select * from services where id = ${id}`
   );
   const result = rows[0];
-  console.log(result);
   return (
     <div>
       <div className="min-h-screen bg-background py-12 px-4">
