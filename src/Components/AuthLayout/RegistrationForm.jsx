@@ -11,6 +11,8 @@ const RegistrationForm = () => {
     const res = await postUser(data);
     if (res?.success) {
       alert("user info added successfully");
+    } else {
+      console.log(res);
     }
   };
 

@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { ThemeToggle } from "../Components/ThemeSwitcher/ThemeSwitcher";
 import Link from "next/link";
-import { getSession, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 
 const NavBar = () => {
   const user = useSession();
