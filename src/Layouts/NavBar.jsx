@@ -6,8 +6,8 @@ import { useSession } from "next-auth/react";
 import AuthButton from "@/Components/Buttons/AuthButtons";
 
 const NavBar = () => {
-  const user = useSession();
-  console.log(user);
+  // const user = useSession();
+  // console.log(user);
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {

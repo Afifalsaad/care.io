@@ -1,18 +1,30 @@
 "use client";
-import { postUser } from "@/actions/Server/data";
+import { postUser } from "@/actions/Server/auth";
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { useForm } from "react-hook-form";
 
 const RegistrationForm = () => {
   const { register, handleSubmit } = useForm();
+  const router = useRouter();
 
   const onSubmit = async (data) => {
     const res = await postUser(data);
+    console.log(data.name);
     if (res?.success) {
-      alert("user info added successfully");
-    } else {
-      console.log(res);
+      const res = await signIn("credentials", {
+        email: data.email,
+        password: data.password,
+        redirect: false,
+        // callbackUrl: callBackUrl,
+      });
+      if (res.ok) {
+        alert("success", "register successful. please login", "success");
+        router.push("/login");
+      } else {
+        alert("error", "Registration failed", "error");
+      }
     }
   };
 
@@ -98,10 +110,10 @@ const RegistrationForm = () => {
               <div className="grid md:grid-cols-2 gap-8">
                 <div>
                   <label className=" text-sm font-medium mb-2 block">
-                    First Name
+                    Name
                   </label>
                   <input
-                    {...register("firstName")}
+                    {...register("name")}
                     type="text"
                     className=" focus:bg-transparent w-full text-sm  px-4 py-2.5 rounded-sm border border-gray-200 focus:border-blue-600 outline-0 transition-all"
                     placeholder="Enter name"
@@ -109,13 +121,13 @@ const RegistrationForm = () => {
                 </div>
                 <div>
                   <label className=" text-sm font-medium mb-2 block">
-                    Last Name
+                    NID Number
                   </label>
                   <input
-                    {...register("lastName")}
+                    {...register("nidNumber")}
                     type="text"
                     className=" focus:bg-transparent w-full text-sm  px-4 py-2.5 rounded-sm border border-gray-200 focus:border-blue-600 outline-0 transition-all"
-                    placeholder="Enter last name"
+                    placeholder="Enter NID Number"
                   />
                 </div>
                 <div>

@@ -2,30 +2,37 @@
 import React from "react";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
-
-const handleLogin = async (e) => {
-  e.preventDefault();
-
-  const form = e.target;
-
-  const logInInfo = {
-    email: form.email.value,
-    password: form.password.value,
-  };
-  const res = await signIn("credentials", {
-    email: logInInfo.email,
-    password: logInInfo.password,
-    redirect: false,
-  });
-
-  if (res?.ok) {
-    console.log("logged in");
-  } else {
-    console.log("login failed");
-  }
-};
+import { useRouter, useSearchParams } from "next/navigation";
 
 const LoginForm = () => {
+  const params = useSearchParams();
+  const callBack = params.get("callbackUrl") || "/";
+  const router = useRouter();
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    const form = e.target;
+
+    const logInInfo = {
+      email: form.email.value,
+      password: form.password.value,
+    };
+    const res = await signIn("credentials", {
+      email: logInInfo.email,
+      password: logInInfo.password,
+      redirect: false,
+      callbackUrl: params.get("callbackUrl") || "/",
+    });
+
+    if (res?.ok) {
+      console.log("logged in");
+      router.push("/");
+    } else {
+      console.log("login failed");
+    }
+  };
+
   return (
     <div>
       <div className="h-150">
