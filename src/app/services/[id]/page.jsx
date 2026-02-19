@@ -1,3 +1,4 @@
+import BookButton from "@/Components/Buttons/BookButton";
 import { Badge } from "@/Components/ui/badge";
 import { Button } from "@/Components/ui/button";
 import { dbConnect } from "@/lib/dbConnect";
@@ -74,13 +75,7 @@ const ServiceDetails = async ({ params }) => {
               </div>
 
               <div className="pt-6 flex flex-col sm:flex-row gap-4">
-                <Link href={`/bookingpage?serviceId=${id}`}>
-                  <Button
-                    size="lg"
-                    className="bg-secondary px-8 py-6 text-lg rounded-xl flex-1">
-                    Book This Service
-                  </Button>
-                </Link>
+                <BookButton result={result}></BookButton>
 
                 <Button
                   size="lg"

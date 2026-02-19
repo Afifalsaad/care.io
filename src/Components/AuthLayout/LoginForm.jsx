@@ -3,6 +3,8 @@ import React from "react";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
+import { RectangleGogglesIcon } from "lucide-react";
+import SocialMediaButton from "../Buttons/SocialMediaButton";
 
 const LoginForm = () => {
   const params = useSearchParams();
@@ -130,6 +132,7 @@ const LoginForm = () => {
                   Register here
                 </Link>
               </p>
+              <SocialMediaButton></SocialMediaButton>
             </div>
           </div>
         </div>
