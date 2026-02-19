@@ -4,6 +4,7 @@ import { dbConnect } from "@/lib/dbConnect";
 import { Banknote, CheckCircle, Clock, DollarSign } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 const ServiceDetails = async ({ params }) => {
@@ -73,11 +74,14 @@ const ServiceDetails = async ({ params }) => {
               </div>
 
               <div className="pt-6 flex flex-col sm:flex-row gap-4">
-                <Button
-                  size="lg"
-                  className="bg-secondary px-8 py-6 text-lg rounded-xl flex-1">
-                  Book This Service
-                </Button>
+                <Link href={`/bookingpage?serviceId=${id}`}>
+                  <Button
+                    size="lg"
+                    className="bg-secondary px-8 py-6 text-lg rounded-xl flex-1">
+                    Book This Service
+                  </Button>
+                </Link>
+
                 <Button
                   size="lg"
                   variant="outline"
