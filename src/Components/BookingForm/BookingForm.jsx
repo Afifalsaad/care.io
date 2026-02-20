@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Calendar } from "@/Components/ui/calendar";
 import {
   Card,
@@ -11,16 +11,11 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/Components/ui/select";
 import { Input } from "@/Components/ui/input";
 import { Label } from "@/Components/ui/label";
-import { useForm } from "react-hook-form";
+import { getData } from "@/actions/Server/book";
+import { useSession } from "next-auth/react";
+import { usePathname, useRouter } from "next/navigation";
 
 const timeSlots = [
   "10:00 AM",
@@ -32,14 +27,45 @@ const timeSlots = [
 ];
 
 const BookingForm = ({ id }) => {
-  console.log(id);
   const [date, setDate] = useState(new Date());
+  const [data, setData] = useState(null);
   const [selectedTime, setSelectedTime] = useState();
+  const [isMounted, setIsMounted] = useState(false);
+  const router = useRouter();
+  const user = useSession();
+  const pathName = usePathname();
 
-  const handleBooking = (e) => {
+  const isExist = user?.data?.user;
+  // console.log(user.data?.user?.name);
+  console.log(isExist?.name);
+  useEffect(() => {
+    if (user.status !== "authenticated" && user.status !== "loading") {
+      router.push(`/login?callbackUrl=${pathName}`);
+    }
+  }, [router, user, pathName]);
+
+  useEffect(() => {
+    setIsMounted(true);
+    const fetchData = async () => {
+      const res = await getData(id);
+      setData(res);
+    };
+    fetchData();
+  }, [id]);
+
+  if (!isMounted)
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <h2>Loading...</h2>
+      </div>
+    );
+
+  // console.log(data);
+
+  const handleBooking = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const data = {
+    const bookingInfo = {
       name: formData.get("name"),
       email: formData.get("email"),
       service: formData.get("service"),
@@ -47,8 +73,8 @@ const BookingForm = ({ id }) => {
       time: selectedTime,
     };
 
-    console.log("Booking Details:", data);
-    alert(`Thank You ${data.name}! Your booking request was sent.`);
+    console.log("Booking Details:", bookingInfo);
+    alert(`Thank You ${bookingInfo.name}! Your booking request was sent.`);
   };
 
   return (
@@ -75,7 +101,7 @@ const BookingForm = ({ id }) => {
                     mode="single"
                     selected={date}
                     onSelect={setDate}
-                    className="rounded-md"
+                    className="rounded-md text-primary"
                     disabled={(day) =>
                       day < new Date(new Date().setHours(0, 0, 0, 0)) ||
                       day.getDay() === 0
@@ -94,10 +120,8 @@ const BookingForm = ({ id }) => {
                       key={time}
                       type="button"
                       variant={selectedTime === time ? "default" : "outline"}
-                      className={`h-10 transition-all hover:cursor-pointer ${
-                        selectedTime === time
-                          ? "scale-105"
-                          : "border border-black"
+                      className={`h-10 transition-all hover:cursor-pointer  ${
+                        selectedTime === time ? "scale-105 text-white" : ""
                       }`}
                       onClick={() => setSelectedTime(time)}>
                       {time}
@@ -113,23 +137,18 @@ const BookingForm = ({ id }) => {
               </Label>
 
               <div className="space-y-2">
-                <Label htmlFor="service">Service</Label>
-                <Select name="service" required>
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Select Your Service" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="consultation">
-                      Baby Care Service
-                    </SelectItem>
-                    <SelectItem value="web-development">
-                      Elderly Care Service
-                    </SelectItem>
-                    <SelectItem value="digital-marketing">
-                      Sick People Care Service
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
+                <Label
+                  htmlFor="service"
+                  className="text-sm font-bold text-primary">
+                  Selected Service
+                </Label>
+                <Input
+                  type="text"
+                  name="service"
+                  value={data?.title || ""}
+                  readOnly
+                  className="bg-muted/50 border cursor-not-allowed focus-visible:ring-0"
+                />
               </div>
 
               <div className="space-y-2">
@@ -137,7 +156,8 @@ const BookingForm = ({ id }) => {
                 <Input
                   id="name"
                   name="name"
-                  placeholder="Enter your name"
+                  value={isExist?.name}
+                  readOnly
                   required
                 />
               </div>
@@ -148,7 +168,8 @@ const BookingForm = ({ id }) => {
                   id="email"
                   name="email"
                   type="email"
-                  placeholder="example@gmail.com"
+                  value={isExist?.email}
+                  readOnly
                   required
                 />
               </div>
@@ -157,7 +178,7 @@ const BookingForm = ({ id }) => {
                 <p className="flex justify-between">
                   <span className="text-muted-foreground">Date :</span>
                   <span className="font-semibold">
-                    {date ? date.toDateString() : "Select Date"}
+                    {date ? date.toDateString("en-US") : "Select Date"}
                   </span>
                 </p>
                 <p className="flex justify-between mt-1">
@@ -173,7 +194,7 @@ const BookingForm = ({ id }) => {
           <CardFooter className="pt-6">
             <Button
               type="submit"
-              className="w-full text-lg font-bold h-12 rounded-xl shadow-lg bg-secondary hover:shadow-secondary/70 transition-all">
+              className="w-full text-lg font-bold h-12 rounded-xl shadow-lg bg-secondary hover:shadow-secondary/70 transition-all text-white">
               Confirm Appointment
             </Button>
           </CardFooter>

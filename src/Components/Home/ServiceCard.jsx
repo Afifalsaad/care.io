@@ -39,7 +39,7 @@ const ServiceCard = async () => {
 
             <CardFooter>
               <Link href={`services/${service.id}`}>
-                <Button className="w-full bg-secondary hover:cursor-pointer">
+                <Button className="w-full text-white bg-secondary hover:cursor-pointer">
                   View Service
                 </Button>
               </Link>

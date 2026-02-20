@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 
 const RegistrationForm = () => {
   const { register, handleSubmit } = useForm();
+  // const
   const router = useRouter();
 
   const onSubmit = async (data) => {

@@ -3,29 +3,30 @@ import React from "react";
 import { Button } from "../ui/button";
 import { useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
+import Link from "next/link";
 
 const BookButton = ({ result }) => {
   const user = useSession();
   const router = useRouter();
   const pathName = usePathname();
-  console.log(pathName);
+  console.log(result);
 
   const bookService = () => {
     if (user.status !== "authenticated") {
-      router.push(`/login?callbackUrl=${pathName}`);
+      router.push(``);
     } else {
-      alert(result.id);
+      router.push(``);
     }
   };
-  console.log(result);
   return (
     <div>
-      <Button
-        onClick={bookService}
-        size="lg"
-        className="bg-secondary px-8 py-6 text-lg rounded-xl flex-1">
-        Book This Service
-      </Button>
+      <Link href={`/bookingpage/${result.id}`}>
+        <Button
+          size="lg"
+          className="bg-secondary text-white px-8 py-6 text-lg rounded-xl flex-1">
+          Book This Service
+        </Button>
+      </Link>
     </div>
   );
 };

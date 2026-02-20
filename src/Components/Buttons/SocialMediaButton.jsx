@@ -1,10 +1,14 @@
 import { signIn } from "next-auth/react";
+import { useSearchParams } from "next/navigation";
 import React from "react";
 import { FcGoogle } from "react-icons/fc";
 
 const SocialMediaButton = () => {
+  const params = useSearchParams();
   const handleLogin = async () => {
-    await signIn("google");
+    await signIn("google", {
+      callbackUrl: params.get("callbackUrl") || "/",
+    });
   };
 
   return (

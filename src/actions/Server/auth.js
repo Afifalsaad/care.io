@@ -52,14 +52,9 @@ export const loginUser = async (payload) => {
   const isMatched = await bcrypt.compare(password, user.password);
 
   if (isMatched) {
-    console.log({
-      id: user.id,
-      name: user.name,
-      email: user.email,
-    });
     return {
       id: user.id,
-      name: user.firstName,
+      name: user.name,
       email: user.email,
     };
   } else {

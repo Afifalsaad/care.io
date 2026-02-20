@@ -23,8 +23,6 @@ export const authOptions = {
   ],
   callbacks: {
     async signIn({ user, account }) {
-      console.log("from signIn", user, account);
-
       const [rows] = await dbConnect.execute(
         "select email from users where email=?",
         [user.email]

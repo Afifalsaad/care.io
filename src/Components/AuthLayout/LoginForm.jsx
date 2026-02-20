@@ -28,10 +28,10 @@ const LoginForm = () => {
     });
 
     if (res?.ok) {
-      console.log("logged in");
-      router.push("/");
+      alert("logged in");
+      router.push(callBack);
     } else {
-      console.log("login failed");
+      alert("login failed");
     }
   };
 

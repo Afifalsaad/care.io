@@ -2,10 +2,8 @@ import BookButton from "@/Components/Buttons/BookButton";
 import { Badge } from "@/Components/ui/badge";
 import { Button } from "@/Components/ui/button";
 import { dbConnect } from "@/lib/dbConnect";
-import { Banknote, CheckCircle, Clock, DollarSign } from "lucide-react";
-import { useSession } from "next-auth/react";
+import { Banknote, CheckCircle, Clock } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 import React from "react";
 
 const ServiceDetails = async ({ params }) => {
