@@ -8,7 +8,6 @@ import Link from "next/link";
 const BookButton = ({ result }) => {
   const user = useSession();
   const router = useRouter();
-  const pathName = usePathname();
   console.log(result);
 
   const bookService = () => {
@@ -23,7 +22,7 @@ const BookButton = ({ result }) => {
       <Link href={`/bookingpage/${result.id}`}>
         <Button
           size="lg"
-          className="bg-secondary text-white px-8 py-6 text-lg rounded-xl flex-1">
+          className="bg-secondary hover:cursor-pointer text-white px-8 py-6 text-lg rounded-xl flex-1">
           Book This Service
         </Button>
       </Link>

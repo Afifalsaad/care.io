@@ -13,7 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/Components/ui/input";
 import { Label } from "@/Components/ui/label";
-import { getData } from "@/actions/Server/book";
+import { getData, postBooking } from "@/actions/Server/book";
 import { useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
 
@@ -36,8 +36,7 @@ const BookingForm = ({ id }) => {
   const pathName = usePathname();
 
   const isExist = user?.data?.user;
-  // console.log(user.data?.user?.name);
-  console.log(isExist?.name);
+
   useEffect(() => {
     if (user.status !== "authenticated" && user.status !== "loading") {
       router.push(`/login?callbackUrl=${pathName}`);
@@ -60,10 +59,13 @@ const BookingForm = ({ id }) => {
       </div>
     );
 
-  // console.log(data);
-
   const handleBooking = async (e) => {
     e.preventDefault();
+
+    if (!selectedTime) {
+      return alert("Please select a time");
+    }
+
     const formData = new FormData(e.currentTarget);
     const bookingInfo = {
       name: formData.get("name"),
@@ -73,8 +75,15 @@ const BookingForm = ({ id }) => {
       time: selectedTime,
     };
 
-    console.log("Booking Details:", bookingInfo);
-    alert(`Thank You ${bookingInfo.name}! Your booking request was sent.`);
+    const res = await postBooking(bookingInfo);
+    console.log(res);
+    if (res?.success) {
+      alert(res?.message);
+    } else {
+      alert(res?.message);
+    }
+
+    // console.log("Booking Details:", bookingInfo);
   };
 
   return (
@@ -118,6 +127,7 @@ const BookingForm = ({ id }) => {
                   {timeSlots.map((time) => (
                     <Button
                       key={time}
+                      required
                       type="button"
                       variant={selectedTime === time ? "default" : "outline"}
                       className={`h-10 transition-all hover:cursor-pointer  ${
@@ -145,7 +155,7 @@ const BookingForm = ({ id }) => {
                 <Input
                   type="text"
                   name="service"
-                  value={data?.title || ""}
+                  defaultValue={data?.title || ""}
                   readOnly
                   className="bg-muted/50 border cursor-not-allowed focus-visible:ring-0"
                 />
@@ -156,7 +166,7 @@ const BookingForm = ({ id }) => {
                 <Input
                   id="name"
                   name="name"
-                  value={isExist?.name}
+                  defaultValue={isExist?.name}
                   readOnly
                   required
                 />
@@ -168,7 +178,7 @@ const BookingForm = ({ id }) => {
                   id="email"
                   name="email"
                   type="email"
-                  value={isExist?.email}
+                  defaultValue={isExist?.email}
                   readOnly
                   required
                 />

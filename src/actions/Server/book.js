@@ -14,3 +14,41 @@ export const getData = async (id) => {
     return { success: false, message: err };
   }
 };
+
+export const postBooking = async (formData) => {
+  try {
+    const { name, email, service, date, time } = formData;
+
+    const [rows] = await dbConnect.execute(
+      "select email , time from bookings where email = ? and time = ?",
+      [email, time]
+    );
+
+    if (rows.length > 0) {
+      return {
+        success: false,
+        message: "You've already booked this service at selected time.",
+      };
+    }
+
+    const query = `INSERT INTO bookings (name, email, service, date, time)
+    VALUES (?, ?, ?, ?, ?)`;
+
+    const result = await dbConnect.execute(query, [
+      name,
+      email,
+      service,
+      date,
+      time,
+    ]);
+
+    const data = JSON.parse(JSON.stringify(result));
+
+    return {
+      success: true,
+      message: "Service Booked Successfully",
+    };
+  } catch (error) {
+    return { message: error };
+  }
+};

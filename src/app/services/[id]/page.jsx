@@ -78,7 +78,7 @@ const ServiceDetails = async ({ params }) => {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="border-slate-700 hover:bg-slate-800 px-8 py-6 text-lg rounded-xl flex-1">
+                  className="border-slate-700 hover:bg-slate-800 px-8 py-6 text-lg rounded-xl flex-1 hover:cursor-pointer">
                   Contact Support
                 </Button>
               </div>
