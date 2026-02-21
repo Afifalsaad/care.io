@@ -1,7 +1,8 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import "sweetalert2/themes/bulma.css";
-import 'sweetalert2/themes/bootstrap-4.css'
+import "sweetalert2/themes/bootstrap-4.css";
+import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -12,6 +13,7 @@ const LoginForm = () => {
   const params = useSearchParams();
   const callBack = params.get("callbackUrl") || "/";
   const router = useRouter();
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -43,6 +45,11 @@ const LoginForm = () => {
         icon: "error",
       });
     }
+  };
+
+  const handleShowPassword = (e) => {
+    e.preventDefault();
+    setShowPassword(!showPassword);
   };
 
   return (
@@ -104,25 +111,24 @@ const LoginForm = () => {
                     <div className="relative flex items-center">
                       <input
                         name="password"
-                        type="password"
+                        type={showPassword ? "text" : "password"}
                         required
                         className="w-full text-sm border border-slate-300  pr-8 px-4 py-3 rounded-md outline-blue-600"
                         placeholder="Enter password"
                       />
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="#bbb"
-                        stroke="#bbb"
-                        className="w-4.5 h-4.5 absolute right-4 cursor-pointer"
-                        viewBox="0 0 128 128">
-                        <path
-                          d="M64 104C22.127 104 1.367 67.496.504 65.943a4 4 0 0 1 0-3.887C1.367 60.504 22.127 24 64 24s62.633 36.504 63.496 38.057a4 4 0 0 1 0 3.887C126.633 67.496 105.873 104 64 104zM8.707 63.994C13.465 71.205 32.146 96 64 96c31.955 0 50.553-24.775 55.293-31.994C114.535 56.795 95.854 32 64 32 32.045 32 13.447 56.775 8.707 63.994zM64 88c-13.234 0-24-10.766-24-24s10.766-24 24-24 24 10.766 24 24-10.766 24-24 24zm0-40c-8.822 0-16 7.178-16 16s7.178 16 16 16 16-7.178 16-16-7.178-16-16-16z"
-                          data-original="#000000"></path>
-                      </svg>
+                      <button
+                        onClick={handleShowPassword}
+                        className="btn border-none hover:cursor-pointer btn-xs absolute top-3 right-6">
+                        {showPassword ? (
+                          <IoMdEyeOff className="text-xl" />
+                        ) : (
+                          <IoMdEye className="text-xl" />
+                        )}
+                      </button>
                     </div>
                   </div>
                   <div className="text-right">
-                    <a className="text-blue-600 text-sm font-medium hover:underline">
+                    <a className="text-blue-600 hover:cursor-pointer text-sm font-medium hover:underline">
                       Forgot your password?
                     </a>
                   </div>
@@ -137,7 +143,7 @@ const LoginForm = () => {
               <p className="text-sm mt-6 text-center text-slate-600">
                 Don&apos;t have an account{" "}
                 <Link
-                  href="/register"
+                  href={`/register?callbackUrl=${callBack}`}
                   className="text-blue-600 font-medium hover:underline ml-1 whitespace-nowrap">
                   Register here
                 </Link>

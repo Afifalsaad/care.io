@@ -1,30 +1,61 @@
 "use client";
 import { postUser } from "@/actions/Server/auth";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import React from "react";
+import { IoMdEye, IoMdEyeOff } from "react-icons/io";
+import { useRouter, useSearchParams } from "next/navigation";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import Swal from "sweetalert2";
+import { toast, Zoom } from "react-toastify";
 
 const RegistrationForm = () => {
-  const { register, handleSubmit } = useForm();
-  // const
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const router = useRouter();
+  const params = useSearchParams();
+  const callbackUrl = params.get("callbackUrl") || "/";
+  const [showPassword, setShowPassword] = useState(false);
 
   const onSubmit = async (data) => {
-    const res = await postUser(data);
-    console.log(data.name);
-    if (res?.success) {
+    const result = await postUser(data);
+
+    if (data.password !== data.cPassword) {
+      return toast.error("Password didn't match", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        transition: Zoom,
+      });
+    }
+
+    if (result?.success) {
       const res = await signIn("credentials", {
         email: data.email,
         password: data.password,
         redirect: false,
-        // callbackUrl: callBackUrl,
+        callbackUrl: callbackUrl,
       });
       if (res.ok) {
-        alert("success", "register successful. please login", "success");
-        router.push("/login");
+        Swal.fire({
+          theme: "bootstrap-4",
+          title: "Registration successful",
+          icon: "success",
+        });
+        router.push(callbackUrl);
       } else {
-        alert("error", "Registration failed", "error");
+        Swal.fire({
+          theme: "bootstrap-4",
+          title: "Registration failed",
+          icon: "error",
+        });
       }
     }
   };
@@ -32,6 +63,12 @@ const RegistrationForm = () => {
   const handleGoogleSignIn = async () => {
     await signIn("google");
   };
+
+  const handleShowPassword = (e) => {
+    e.preventDefault();
+    setShowPassword(!showPassword);
+  };
+
   return (
     <div>
       <div>
@@ -115,6 +152,7 @@ const RegistrationForm = () => {
                   </label>
                   <input
                     {...register("name")}
+                    required
                     type="text"
                     className=" focus:bg-transparent w-full text-sm  px-4 py-2.5 rounded-sm border border-gray-200 focus:border-blue-600 outline-0 transition-all"
                     placeholder="Enter name"
@@ -126,6 +164,7 @@ const RegistrationForm = () => {
                   </label>
                   <input
                     {...register("nidNumber")}
+                    required
                     type="text"
                     className=" focus:bg-transparent w-full text-sm  px-4 py-2.5 rounded-sm border border-gray-200 focus:border-blue-600 outline-0 transition-all"
                     placeholder="Enter NID Number"
@@ -137,7 +176,8 @@ const RegistrationForm = () => {
                   </label>
                   <input
                     {...register("email")}
-                    type="text"
+                    type="email"
+                    required
                     className=" focus:bg-transparent w-full text-sm  px-4 py-2.5 rounded-sm border border-gray-200 focus:border-blue-600 outline-0 transition-all"
                     placeholder="Enter email"
                   />
@@ -148,21 +188,50 @@ const RegistrationForm = () => {
                   </label>
                   <input
                     {...register("number")}
+                    required
                     type="number"
                     className=" focus:bg-transparent w-full text-sm  px-4 py-2.5 rounded-sm border border-gray-200 focus:border-blue-600 outline-0 transition-all"
                     placeholder="Enter mobile number"
                   />
                 </div>
-                <div>
-                  <label className=" text-sm font-medium mb-2 block">
+                <div className="relative">
+                  <label className="text-sm font-medium mb-2 block">
                     Password
                   </label>
                   <input
-                    {...register("password")}
-                    type="password"
-                    className=" focus:bg-transparent w-full text-sm  px-4 py-2.5 rounded-sm border border-gray-200 focus:border-blue-600 outline-0 transition-all"
+                    type={showPassword ? "text" : "password"}
+                    {...register("password", {
+                      required: true,
+                      minLength: 6,
+                      pattern:
+                        /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{6,}$/,
+                    })}
+                    className="focus:bg-transparent w-full text-sm  px-4 py-2.5 rounded-sm border border-gray-200 focus:border-blue-600 outline-0 transition-all"
                     placeholder="Enter password"
                   />
+                  <button
+                    onClick={handleShowPassword}
+                    className="btn border-none btn-xs absolute top-10 right-6">
+                    {showPassword ? (
+                      <IoMdEyeOff className="text-xl" />
+                    ) : (
+                      <IoMdEye className="text-xl" />
+                    )}
+                  </button>
+                  {errors.password?.type === "required" && (
+                    <p className="text-red-500">Password is required.</p>
+                  )}
+                  {errors.password?.type === "minLength" && (
+                    <p className="text-red-500">
+                      Password must be 6 character long.
+                    </p>
+                  )}
+                  {errors.password?.type === "pattern" && (
+                    <p className="text-red-500">
+                      Password must have a big letter , a small latter , a
+                      special character and a number.
+                    </p>
+                  )}
                 </div>
                 <div>
                   <label className=" text-sm font-medium mb-2 block">
@@ -170,7 +239,7 @@ const RegistrationForm = () => {
                   </label>
                   <input
                     {...register("cPassword")}
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     className=" focus:bg-transparent w-full text-sm  px-4 py-2.5 rounded-sm border border-gray-200 focus:border-blue-600 outline-0 transition-all"
                     placeholder="Enter confirm password"
                   />
