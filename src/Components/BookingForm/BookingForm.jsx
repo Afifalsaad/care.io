@@ -16,6 +16,8 @@ import { Label } from "@/Components/ui/label";
 import { getData, postBooking } from "@/actions/Server/book";
 import { useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
+import { toast, Zoom } from "react-toastify";
+import { SpinnerCustom } from "../ui/spinner";
 
 const timeSlots = [
   "10:00 AM",
@@ -55,7 +57,7 @@ const BookingForm = ({ id }) => {
   if (!isMounted)
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <h2>Loading...</h2>
+        <SpinnerCustom />
       </div>
     );
 
@@ -63,7 +65,17 @@ const BookingForm = ({ id }) => {
     e.preventDefault();
 
     if (!selectedTime) {
-      return alert("Please select a time");
+      return toast.error("Please select a time.", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        transition: Zoom,
+      });
     }
 
     const formData = new FormData(e.currentTarget);
@@ -78,12 +90,30 @@ const BookingForm = ({ id }) => {
     const res = await postBooking(bookingInfo);
     console.log(res);
     if (res?.success) {
-      alert(res?.message);
+      toast.success(`${res?.message}`, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        transition: Zoom,
+      });
     } else {
-      alert(res?.message);
+      toast.error(`${res?.message}`, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        transition: Zoom,
+      });
     }
-
-    // console.log("Booking Details:", bookingInfo);
   };
 
   return (
@@ -204,7 +234,7 @@ const BookingForm = ({ id }) => {
           <CardFooter className="pt-6">
             <Button
               type="submit"
-              className="w-full text-lg font-bold h-12 rounded-xl shadow-lg bg-secondary hover:shadow-secondary/70 transition-all text-white">
+              className="w-full text-lg font-bold h-12 rounded-xl shadow-lg bg-secondary hover:shadow-secondary/70 transition-all text-white hover:cursor-pointer">
               Confirm Appointment
             </Button>
           </CardFooter>

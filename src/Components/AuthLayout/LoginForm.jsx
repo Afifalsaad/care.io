@@ -1,10 +1,12 @@
 "use client";
 import React from "react";
+import "sweetalert2/themes/bulma.css";
+import 'sweetalert2/themes/bootstrap-4.css'
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { RectangleGogglesIcon } from "lucide-react";
 import SocialMediaButton from "../Buttons/SocialMediaButton";
+import Swal from "sweetalert2";
 
 const LoginForm = () => {
   const params = useSearchParams();
@@ -28,10 +30,18 @@ const LoginForm = () => {
     });
 
     if (res?.ok) {
-      alert("logged in");
+      Swal.fire({
+        theme: "bootstrap-4",
+        title: "Login successful",
+        icon: "success",
+      });
       router.push(callBack);
     } else {
-      alert("login failed");
+      Swal.fire({
+        theme: "bootstrap-4",
+        title: "Login failed",
+        icon: "error",
+      });
     }
   };
 
