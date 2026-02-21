@@ -17,7 +17,20 @@ export const getData = async (id) => {
 
 export const postBooking = async (formData) => {
   try {
-    const { name, email, service, date, time } = formData;
+    const {
+      name,
+      email,
+      service,
+      date,
+      time,
+      duration,
+      unit,
+      division,
+      district,
+      city,
+      address,
+      totalCost,
+    } = formData;
 
     const [rows] = await dbConnect.execute(
       "select email , time from bookings where email = ? and time = ?",
@@ -31,8 +44,8 @@ export const postBooking = async (formData) => {
       };
     }
 
-    const query = `INSERT INTO bookings (name, email, service, date, time)
-    VALUES (?, ?, ?, ?, ?)`;
+    const query = `INSERT INTO bookings (name, email, service, date, time , duration, unit, division, district, city, address , totalCost)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
     const result = await dbConnect.execute(query, [
       name,
@@ -40,15 +53,23 @@ export const postBooking = async (formData) => {
       service,
       date,
       time,
+      duration,
+      unit,
+      division,
+      district,
+      city,
+      address,
+      totalCost,
     ]);
 
-    const data = JSON.parse(JSON.stringify(result));
+    JSON.parse(JSON.stringify(result));
 
     return {
       success: true,
       message: "Service Booked Successfully",
     };
   } catch (error) {
+    console.log(error);
     return { message: error };
   }
 };

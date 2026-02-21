@@ -33,10 +33,11 @@ const BookingForm = ({ id }) => {
   const [data, setData] = useState(null);
   const [selectedTime, setSelectedTime] = useState();
   const [isMounted, setIsMounted] = useState(false);
+  const [duration, setDuration] = useState(1);
+  const [unit, setUnit] = useState("hours");
   const router = useRouter();
   const user = useSession();
   const pathName = usePathname();
-
   const isExist = user?.data?.user;
 
   useEffect(() => {
@@ -61,6 +62,20 @@ const BookingForm = ({ id }) => {
       </div>
     );
 
+  const calculatePrice = () => {
+    if (!data?.price || !data) return 0;
+
+    const price = parseInt(data?.price);
+    const qty = parseInt(duration) || 0;
+    console.log(price, qty);
+
+    if (unit === "days") {
+      return price * 8 * qty;
+    } else {
+      return price * qty;
+    }
+  };
+
   const handleBooking = async (e) => {
     e.preventDefault();
 
@@ -83,10 +98,18 @@ const BookingForm = ({ id }) => {
       name: formData.get("name"),
       email: formData.get("email"),
       service: formData.get("service"),
+      duration: formData.get("duration"),
+      unit: formData.get("unit"),
+      division: formData.get("division"),
+      district: formData.get("district"),
+      city: formData.get("city"),
+      address: formData.get("address"),
       date: date?.toDateString(),
+      totalCost: calculatePrice(),
       time: selectedTime,
     };
 
+    console.log(bookingInfo);
     const res = await postBooking(bookingInfo);
     console.log(res);
     if (res?.success) {
@@ -176,10 +199,49 @@ const BookingForm = ({ id }) => {
                 3. Fill your details :
               </Label>
 
+              {/* --- 1. Select Duration --- */}
+              <div className="space-y-2">
+                <Label htmlFor="duration" className="text-sm font-semibold">
+                  Select Duration (days/hours)
+                </Label>
+                <div className="flex gap-2">
+                  <Input
+                    id="duration"
+                    type="number"
+                    name="duration"
+                    min="1"
+                    defaultValue={unit}
+                    placeholder="Enter value"
+                    className="flex-1"
+                    onChange={(e) => setDuration(e.target.value)}
+                    required
+                  />
+                  <select
+                    name="unit"
+                    className="flex h-10 w-32 rounded-md border border-input bg-background px-3 py-2 text-sm"
+                    onChange={(e) => setUnit(e.target.value)}>
+                    <option value="hours">Hours</option>
+                    <option value="days">Days</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* --- 2. Select Location --- */}
+              <div className="space-y-3">
+                <Label className="text-sm font-semibold">Select Location</Label>
+                <div className="grid grid-cols-2 gap-2">
+                  <Input name="division" placeholder="Division" required />
+                  <Input name="district" placeholder="District" required />
+                  <Input name="city" placeholder="City" required />
+                  <Input name="address" placeholder="Area / Address" required />
+                </div>
+              </div>
+
+              {/* --- Existing Fields: Service, Name, Email --- */}
               <div className="space-y-2">
                 <Label
                   htmlFor="service"
-                  className="text-sm font-bold text-primary">
+                  className="text-sm font-semibold text-primary">
                   Selected Service
                 </Label>
                 <Input
@@ -196,7 +258,7 @@ const BookingForm = ({ id }) => {
                 <Input
                   id="name"
                   name="name"
-                  defaultValue={isExist?.name}
+                  defaultValue={isExist?.name || ""}
                   readOnly
                   required
                 />
@@ -208,25 +270,38 @@ const BookingForm = ({ id }) => {
                   id="email"
                   name="email"
                   type="email"
-                  defaultValue={isExist?.email}
+                  defaultValue={isExist?.email || ""}
                   readOnly
                   required
                 />
               </div>
 
-              <div className="p-4 bg-muted/50 rounded-xl border border-dashed border-primary/30 text-sm mt-6">
+              {/* --- 3. Dynamic Total Cost & Summary --- */}
+              <div className="p-4 bg-secondary/10 rounded-xl border border-dashed border-secondary/50 text-sm mt-6 space-y-2">
                 <p className="flex justify-between">
-                  <span className="text-muted-foreground">Date :</span>
+                  <span className="text-muted-foreground">Date & Time:</span>
                   <span className="font-semibold">
-                    {date ? date.toDateString("en-US") : "Select Date"}
+                    {date ? date.toDateString() : "Select Date"} at{" "}
+                    {selectedTime || "Time"}
                   </span>
                 </p>
-                <p className="flex justify-between mt-1">
-                  <span className="text-muted-foreground">Time :</span>
+
+                <p className="flex justify-between">
+                  <span className="text-muted-foreground">Duration:</span>
                   <span className="font-semibold">
-                    {selectedTime || "Select Time"}
+                    {duration || 0} {unit}
                   </span>
                 </p>
+
+                <div className="border-t border-secondary/20 pt-2 flex justify-between items-center">
+                  <span className="text-lg font-bold text-secondary">
+                    Total Cost :
+                  </span>
+                  <span className="text-xl font-extrabold text-primary">
+                    {/* লজিক: সার্ভিস প্রাইজ * ডিউরেশন (যদি প্রাইজ পার আওয়ার/ডে হয়) */}
+                    {calculatePrice().toLocaleString()} BDT
+                  </span>
+                </div>
               </div>
             </div>
           </CardContent>
