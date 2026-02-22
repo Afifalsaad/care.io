@@ -107,6 +107,7 @@ const BookingForm = ({ id }) => {
       date: date?.toDateString(),
       totalCost: calculatePrice(),
       time: selectedTime,
+      status: "pending",
     };
 
     console.log(bookingInfo);

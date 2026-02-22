@@ -18,7 +18,7 @@ const Sidebar = () => {
     <div>
       <nav className="lg:min-w-62.5 w-max max-lg:min-w-8">
         <div
-          className={`bg-background border-r border-primary shadow-lg h-screen fixed top-0 left-0 overflow-auto z-99 lg:min-w-62.5 lg:w-max
+          className={`bg-background border-r shadow-lg h-screen fixed top-0 left-0 overflow-auto z-99 lg:min-w-62.5 lg:w-max
             ${
               isSidebarOpen
                 ? "max-lg:w-62.5 max-lg:visible"
@@ -50,7 +50,7 @@ const Sidebar = () => {
                 <button
                   type="button"
                   onClick={() => toggleSubMenu("dashboard")}
-                  className="w-full text-left text-primary text-[15px] font-medium flex items-center hover:bg-gray-100 rounded-md px-3 py-2.5 transition-all duration-100">
+                  className="w-full text-left text-primary text-[15px] font-medium flex items-center hover:bg-muted rounded-md px-3 py-2.5 transition-all duration-100">
                   <span className="overflow-hidden text-primary whitespace-nowrap">
                     Dashboard
                   </span>
@@ -70,8 +70,13 @@ const Sidebar = () => {
                     openMenus.dashboard ? "max-h-96" : "max-h-0"
                   }`}>
                   <Link
-                    href="/login"
-                    className="block text-primary text-[15px] hover:bg-gray-100 rounded-md px-3 py-2">
+                    href="/dashboard"
+                    className="block text-primary text-[15px] hover:bg-muted rounded-md px-3 py-2">
+                    Dashboard Home
+                  </Link>
+                  <Link
+                    href="/dashboard/myOrders"
+                    className="block text-primary text-[15px] hover:bg-muted rounded-md px-3 py-2">
                     My orders
                   </Link>
                 </ul>

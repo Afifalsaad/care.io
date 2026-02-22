@@ -4,8 +4,7 @@ import React from "react";
 const dashBoard = () => {
   return (
     <div>
-      <h2 className="mt-10">This is dashboard</h2>
-      {/* <Banner></Banner> */}
+      <h2 className="">This is dashboard</h2>
     </div>
   );
 };
