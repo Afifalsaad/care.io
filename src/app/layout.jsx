@@ -1,7 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import NavBar from "../Layouts/NavBar";
-import { Providers } from "./Provider";
+import { Providers } from "./(dashboard)/dashboard/Provider";
 import Footer from "../Layouts/Footer";
 import NextAuthProvider from "@/provider/NextAuthProvider";
 import { ToastContainer, Zoom } from "react-toastify";
@@ -28,10 +28,7 @@ export default function RootLayout({ children }) {
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
           <Providers>
-            <header className="sticky top-0 z-50">
-              <NavBar></NavBar>
-            </header>
-            <main className="md:max-w-300 mx-auto">
+            <main>
               <ToastContainer
                 position="top-center"
                 autoClose={5000}
@@ -47,9 +44,6 @@ export default function RootLayout({ children }) {
               />
               {children}
             </main>
-            <footer>
-              <Footer></Footer>
-            </footer>
           </Providers>
         </body>
       </html>

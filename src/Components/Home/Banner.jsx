@@ -4,7 +4,7 @@ const Banner = () => {
   return (
     <div>
       <div
-        className="relative bg-no-repeat bg-center bg-cover z-40 before:absolute before:inset-0 before:bg-black/70"
+        className="relative h-130 bg-no-repeat bg-center bg-cover z-40 before:absolute before:inset-0 before:bg-black/70"
         style={{
           backgroundImage: "url('/BannerImg.png')",
         }}>

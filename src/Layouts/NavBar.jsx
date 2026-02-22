@@ -57,6 +57,13 @@ const NavBar = () => {
                   Services
                 </Link>
               </li>
+              <li className="max-lg:border-b max-lg:border-border max-lg:pb-2">
+                <Link
+                  className="text-primary block font-medium text-[15px]"
+                  href={"/dashboard"}>
+                  Dashboard
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
