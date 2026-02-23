@@ -34,14 +34,14 @@ export const postBooking = async (formData) => {
     } = formData;
 
     const [rows] = await dbConnect.execute(
-      "select email , time from bookings where email = ? and time = ?",
-      [email, time]
+      "select email , time, date from bookings where email = ? and time = ? and date = ?",
+      [email, time, date]
     );
 
     if (rows.length > 0) {
       return {
         success: false,
-        message: "You've already booked this service at selected time.",
+        message: "You've already booked service at selected time.",
       };
     }
 
@@ -84,4 +84,19 @@ export const getBooking = async (email) => {
 
   console.log(rows);
   return rows;
+};
+
+export const deleteBooking = async (id) => {
+  try {
+    const [res] = await dbConnect.execute("delete from bookings where id = ?", [
+      id,
+    ]);
+    if (res.affectedRows > 0) {
+      return { success: true, message: "Deleted Successfully." };
+    } else {
+      return { success: false, message: "can't find record." };
+    }
+  } catch (err) {
+    return { success: false };
+  }
 };
