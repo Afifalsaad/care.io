@@ -56,13 +56,27 @@ export const authOptions = {
     //   return baseUrl;
     // },
     async session({ session, user, token }) {
-      // if (token) {
-      //   session.role = token?.role;
-      // }
+      console.log("from session", token);
+      if (token) {
+        session.role = token?.role;
+      }
       return session;
     },
     async jwt({ token, user, account, profile, isNewUser }) {
-      console.log("from jwt", user);
+      if (user) {
+        try {
+          const [dbUser] = await dbConnect.execute(
+            "select * from users where email = ?",
+            [user?.email]
+          );
+          if (dbUser.length > 0) {
+            token.role = dbUser[0]?.role;
+          }
+          // console.log("from jwt", dbUser);
+        } catch (error) {
+          console.log(error);
+        }
+      }
       return token;
     },
   },

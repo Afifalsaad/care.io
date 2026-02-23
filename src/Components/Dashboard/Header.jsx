@@ -7,6 +7,7 @@ import { FaRegCircleUser } from "react-icons/fa6";
 
 const Header = () => {
   const { data: session, status } = useSession();
+  console.log(session);
 
   if (status === "loading") {
     return "";

@@ -50,7 +50,7 @@ const Sidebar = () => {
                 <button
                   type="button"
                   onClick={() => toggleSubMenu("dashboard")}
-                  className="w-full text-left text-primary text-[15px] font-medium flex items-center hover:bg-muted rounded-md px-3 py-2.5 transition-all duration-100">
+                  className="w-full text-left text-primary text-[15px] font-medium flex items-center hover:bg-muted hover:cursor-pointer rounded-md px-3 py-2.5 transition-all duration-100">
                   <span className="overflow-hidden text-primary whitespace-nowrap">
                     Dashboard
                   </span>

@@ -16,7 +16,6 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/Components/ui/alert-dialog";
-import { Button } from "@/Components/ui/button";
 
 const MyOrders = () => {
   const { data: session, status } = useSession();
@@ -26,7 +25,6 @@ const MyOrders = () => {
     const fetchData = async () => {
       try {
         const result = await getBooking(session?.user?.email);
-        console.log("fetched data", result);
         setBookings(result);
       } catch (err) {
         console.log("error", err);
@@ -77,6 +75,14 @@ const MyOrders = () => {
       }
     });
   };
+
+  if (bookings.length === 0) {
+    return (
+      <div className="flex items-center justify-center h-110">
+        <h2 className="font-semibold text-xl">No Data Found</h2>
+      </div>
+    );
+  }
 
   if (status === "loading") {
     return (
