@@ -7,7 +7,6 @@ import { FaRegCircleUser } from "react-icons/fa6";
 
 const Header = () => {
   const { data: session, status } = useSession();
-  console.log(session, status);
 
   if (status === "loading") {
     return "";
@@ -33,22 +32,20 @@ const Header = () => {
             </div>
             <div className="flex items-center gap-8 ml-auto">
               <div className="dropdown-menu relative w-10 h-10 flex shrink-0 group hover:cursor-pointer">
-                <Image
-                  alt={session.user?.name}
-                  className="rounded-full"
-                  src={
-                    session.user?.image ? (
-                      session.user?.image
-                    ) : (
-                      <FaRegCircleUser />
-                    )
-                  }
-                  fill></Image>
+                {session?.user?.image ? (
+                  <Image
+                    alt={session?.user?.name}
+                    className="rounded-full"
+                    src={session?.user?.image ? session?.user?.image : ""}
+                    fill></Image>
+                ) : (
+                  <FaRegCircleUser className="w-8 h-8" />
+                )}
 
                 <div className="dropdown-content hidden group-hover:block bg-background shadow-md p-2 rounded-md absolute top-9 right-0 w-56">
                   <div className="w-full">
                     <Link
-                      href="/myOrders"
+                      href="/dashboard/myOrders"
                       className="text-[15px] w-full font-medium cursor-pointer flex items-center p-2 rounded-md hover:bg-muted dropdown-item transition duration-300 ease-in-out">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"

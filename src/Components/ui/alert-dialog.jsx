@@ -124,7 +124,7 @@ function AlertDialogAction({
     <Button variant={variant} size={size} asChild>
       <AlertDialogPrimitive.Action
         data-slot="alert-dialog-action"
-        className={" "}
+        className={cn("bg-primary hover:cursor-pointer", className)}
         {...props}
       />
     </Button>

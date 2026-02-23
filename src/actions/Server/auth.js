@@ -17,8 +17,8 @@ export const postUser = async (payload) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const query = `INSERT INTO users (name, email, NID, number, password)
-    VALUES (?, ?, ?, ?, ?)`;
+    const query = `INSERT INTO users (name, email, NID, number, password ,role)
+    VALUES (?, ?, ?, ?, ?, ?)`;
 
     await dbConnect.execute(query, [
       name,
@@ -26,6 +26,7 @@ export const postUser = async (payload) => {
       nidNumber,
       number,
       hashedPassword,
+      "user",
     ]);
     return { success: true };
   } catch (err) {
@@ -38,10 +39,9 @@ export const loginUser = async (payload) => {
 
   if (!email || !password) return null;
 
-  const [rows] = await dbConnect.execute(
-    "select id, name, email, password from users where email=?",
-    [email]
-  );
+  const [rows] = await dbConnect.execute("select * from users where email= ?", [
+    email,
+  ]);
 
   if (rows.length === 0) {
     return null;
@@ -52,11 +52,7 @@ export const loginUser = async (payload) => {
   const isMatched = await bcrypt.compare(password, user.password);
 
   if (isMatched) {
-    return {
-      id: user.id,
-      name: user.name,
-      email: user.email,
-    };
+    return user;
   } else {
     return null;
   }

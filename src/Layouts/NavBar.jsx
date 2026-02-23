@@ -6,8 +6,7 @@ import { useSession } from "next-auth/react";
 import AuthButton from "@/Components/Buttons/AuthButtons";
 
 const NavBar = () => {
-  // const user = useSession();
-  // console.log(user);
+  const { data: session, status } = useSession();
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -57,12 +56,19 @@ const NavBar = () => {
                   Services
                 </Link>
               </li>
+
               <li className="max-lg:border-b max-lg:border-border max-lg:pb-2">
-                <Link
-                  className="text-primary block font-medium text-[15px]"
-                  href={"/dashboard"}>
-                  Dashboard
-                </Link>
+                {status === "authenticated" ? (
+                  <>
+                    <Link
+                      className="text-primary block font-medium text-[15px]"
+                      href={"/dashboard"}>
+                      Dashboard
+                    </Link>
+                  </>
+                ) : (
+                  ""
+                )}
               </li>
             </ul>
           </div>

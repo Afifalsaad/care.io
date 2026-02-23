@@ -24,7 +24,7 @@ export const authOptions = {
   callbacks: {
     async signIn({ user, account }) {
       const [rows] = await dbConnect.execute(
-        "select email from users where email=?",
+        "select email from users where email= ?",
         [user.email]
       );
 
@@ -32,24 +32,37 @@ export const authOptions = {
         return true;
       }
 
-      const query = `INSERT INTO users (name, email, image, provider)
-          VALUES (?, ?, ?, ?)`;
+      try {
+        const query = `INSERT INTO users (name, email, image, provider, role)
+        VALUES (?, ?, ?, ?, ?)`;
 
-      await dbConnect.execute(query, [
-        user.name,
-        user?.email,
-        user.image,
-        account.provider,
-      ]);
-      return true;
+        const [res] = await dbConnect.execute(query, [
+          user.name,
+          user?.email,
+          user.image,
+          account.provider,
+          "user",
+        ]);
+        if (res.affectedRows) {
+          return true;
+        } else {
+          return false;
+        }
+      } catch (err) {
+        console.log(err);
+      }
     },
     // async redirect({ url, baseUrl }) {
     //   return baseUrl;
     // },
     async session({ session, user, token }) {
+      // if (token) {
+      //   session.role = token?.role;
+      // }
       return session;
     },
     async jwt({ token, user, account, profile, isNewUser }) {
+      console.log("from jwt", user);
       return token;
     },
   },
