@@ -5,6 +5,18 @@ import React, { useEffect, useState } from "react";
 import { SpinnerCustom } from "../ui/spinner";
 import { toast, Zoom } from "react-toastify";
 import Swal from "sweetalert2";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/Components/ui/alert-dialog";
+import { Button } from "@/Components/ui/button";
 
 const MyOrders = () => {
   const { data: session, status } = useSession();
@@ -112,12 +124,48 @@ const MyOrders = () => {
                 <td className="px-4 py-4 text-sm font-medium">{d.totalCost}</td>
                 <td className="px-4 py-4 text-sm font-medium">{d.status}</td>
                 <td className="px-4 py-4 text-sm">
-                  <button className="cursor-pointer text-blue-600 font-medium mr-4">
-                    Edit
-                  </button>
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <button className="cursor-pointer text-blue-600 font-medium mr-3">
+                        View Details
+                      </button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>Booking Details</AlertDialogTitle>
+                        <AlertDialogDescription>
+                          Detailed information about your booking for{" "}
+                          {d.service}.
+                        </AlertDialogDescription>
+                        <div className="space-y-2 pt-4 text-sm border-t">
+                          <p>
+                            <strong>Service:</strong> {d.service}
+                          </p>
+                          <p>
+                            <strong>Duration:</strong> {d.duration} {d.unit}
+                          </p>
+                          <p>
+                            <strong>District:</strong> {d.district}
+                          </p>
+                          <p>
+                            <strong>Total Cost:</strong> ${d.totalCost}
+                          </p>
+                          <p>
+                            <strong>Status:</strong>{" "}
+                            <span className="capitalize">{d.status}</span>
+                          </p>
+                        </div>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogAction>Close</AlertDialogAction>
+                        <AlertDialogAction>Pay</AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+
                   <button
                     onClick={() => handleDelete(d.id)}
-                    className="cursor-pointer text-red-600 font-medium">
+                    className="cursor-pointer text-red-600 font-medium hover:underline">
                     Delete
                   </button>
                 </td>
