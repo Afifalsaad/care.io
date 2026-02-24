@@ -1,14 +1,10 @@
 import { Providers } from "@/app/(dashboard)/dashboard/Provider";
 import Header from "@/Components/Dashboard/Header";
 import Sidebar from "@/Components/Dashboard/Sidebar";
-import { authOptions } from "@/lib/authOptions";
 import NextAuthProvider from "@/provider/NextAuthProvider";
-import { getServerSession } from "next-auth";
 import React from "react";
 
 const DAshboardLayout = async ({ children }) => {
-  const user = await getServerSession(authOptions);
-  console.log("from layout", user);
   return (
     <div>
       <NextAuthProvider>
