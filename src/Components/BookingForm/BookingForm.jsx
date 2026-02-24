@@ -34,6 +34,7 @@ const BookingForm = ({ id }) => {
   const [selectedTime, setSelectedTime] = useState();
   const [isMounted, setIsMounted] = useState(false);
   const [duration, setDuration] = useState(1);
+  const [loading, setLoading] = useState(false);
   const [unit, setUnit] = useState("hours");
   const router = useRouter();
   const user = useSession();
@@ -77,6 +78,7 @@ const BookingForm = ({ id }) => {
   };
 
   const handleBooking = async (e) => {
+    setLoading(true);
     e.preventDefault();
 
     if (!selectedTime) {
@@ -110,9 +112,7 @@ const BookingForm = ({ id }) => {
       status: "pending",
     };
 
-    console.log(bookingInfo);
     const res = await postBooking(bookingInfo);
-    console.log(res);
     if (res?.success) {
       toast.success(`${res?.message}`, {
         position: "top-center",
@@ -125,6 +125,9 @@ const BookingForm = ({ id }) => {
         theme: "dark",
         transition: Zoom,
       });
+      setTimeout(() => {
+        router.push("/dashboard/myOrders");
+      }, 5000);
     } else {
       toast.error(`${res?.message}`, {
         position: "top-center",
@@ -138,6 +141,7 @@ const BookingForm = ({ id }) => {
         transition: Zoom,
       });
     }
+    setLoading(false);
   };
 
   return (
@@ -299,7 +303,6 @@ const BookingForm = ({ id }) => {
                     Total Cost :
                   </span>
                   <span className="text-xl font-extrabold text-primary">
-                    {/* লজিক: সার্ভিস প্রাইজ * ডিউরেশন (যদি প্রাইজ পার আওয়ার/ডে হয়) */}
                     {calculatePrice().toLocaleString()} BDT
                   </span>
                 </div>
@@ -308,11 +311,17 @@ const BookingForm = ({ id }) => {
           </CardContent>
 
           <CardFooter className="pt-6">
-            <Button
-              type="submit"
-              className="w-full text-lg font-bold h-12 rounded-xl shadow-lg bg-secondary hover:shadow-secondary/70 transition-all text-white hover:cursor-pointer">
-              Confirm Appointment
-            </Button>
+            {loading ? (
+              <Button
+                disabled
+                className="w-full text-lg font-bold h-12 rounded-xl shadow-lg bg-secondary hover:shadow-secondary/70 disabled:cursor-not-allowed transition-all cursor-not-allowed text-white ">
+                Processing...
+              </Button>
+            ) : (
+              <Button className="w-full text-lg font-bold h-12 rounded-xl shadow-lg bg-secondary hover:shadow-secondary/70 transition-all text-white hover:cursor-pointer">
+                Confirm Appointment
+              </Button>
+            )}
           </CardFooter>
         </form>
       </Card>

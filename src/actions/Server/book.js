@@ -68,7 +68,7 @@ export const postBooking = async (formData) => {
 
     return {
       success: true,
-      message: "Service Booked Successfully",
+      message: "Service Booked Successfully. Redirecting to pay.",
     };
   } catch (error) {
     console.log(error);
@@ -81,8 +81,6 @@ export const getBooking = async (email) => {
     "select * from bookings where email= ?",
     [email]
   );
-
-  console.log(rows);
   return rows;
 };
 

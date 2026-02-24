@@ -56,7 +56,6 @@ export const authOptions = {
     //   return baseUrl;
     // },
     async session({ session, user, token }) {
-      console.log("from session", token);
       if (token) {
         session.role = token?.role;
       }

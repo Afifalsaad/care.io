@@ -2,10 +2,12 @@
 import Link from "next/link";
 import React, { useState } from "react";
 import { ThemeToggle } from "../ThemeSwitcher/ThemeSwitcher";
+import { useSession } from "next-auth/react";
 
 const Sidebar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [openMenus, setOpenMenus] = useState({});
+  const { data: session, status } = useSession();
 
   const toggleSubMenu = (menu) => {
     setOpenMenus((prev) => ({
@@ -18,7 +20,7 @@ const Sidebar = () => {
     <div>
       <nav className="lg:min-w-62.5 w-max max-lg:min-w-8">
         <div
-          className={`bg-background border-r shadow-lg h-screen fixed top-0 left-0 overflow-auto z-99 lg:min-w-62.5 lg:w-max
+          className={`shadow-lg h-screen fixed top-0 left-0 overflow-auto z-99 lg:min-w-62.5 lg:w-max
             ${
               isSidebarOpen
                 ? "max-lg:w-62.5 max-lg:visible"
@@ -79,6 +81,15 @@ const Sidebar = () => {
                     className="block text-primary text-[15px] hover:bg-muted rounded-md px-3 py-2">
                     My orders
                   </Link>
+                  {session?.role !== "user" ? (
+                    ""
+                  ) : (
+                    <Link
+                      href="/dashboard/payments"
+                      className="block text-primary text-[15px] hover:bg-muted rounded-md px-3 py-2">
+                      Payments
+                    </Link>
+                  )}
                 </ul>
               </li>
             </ul>

@@ -8,7 +8,6 @@ import Swal from "sweetalert2";
 import {
   AlertDialog,
   AlertDialogAction,
-  AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
   AlertDialogFooter,
@@ -16,10 +15,15 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/Components/ui/alert-dialog";
+import PayButton from "../Buttons/PayButton";
 
 const MyOrders = () => {
   const { data: session, status } = useSession();
   const [bookings, setBookings] = useState([]);
+
+  const handlePayment = () => {
+    console.log("clicked");
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -76,18 +80,18 @@ const MyOrders = () => {
     });
   };
 
-  if (bookings.length === 0) {
-    return (
-      <div className="flex items-center justify-center h-110">
-        <h2 className="font-semibold text-xl">No Data Found</h2>
-      </div>
-    );
-  }
-
   if (status === "loading") {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <SpinnerCustom></SpinnerCustom>
+      </div>
+    );
+  }
+
+  if (bookings.length === 0) {
+    return (
+      <div className="flex items-center justify-center h-110">
+        <h2 className="font-semibold text-xl">No Data Found</h2>
       </div>
     );
   }
@@ -164,7 +168,9 @@ const MyOrders = () => {
                       </AlertDialogHeader>
                       <AlertDialogFooter>
                         <AlertDialogAction>Close</AlertDialogAction>
-                        <AlertDialogAction>Pay</AlertDialogAction>
+                        <AlertDialogAction>
+                          <PayButton data={d}></PayButton>
+                        </AlertDialogAction>
                       </AlertDialogFooter>
                     </AlertDialogContent>
                   </AlertDialog>

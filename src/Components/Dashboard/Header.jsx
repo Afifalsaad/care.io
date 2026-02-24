@@ -4,13 +4,13 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { FaRegCircleUser } from "react-icons/fa6";
+import HeaderSkeleton from "../Skeletons/HeaderSkeleton";
 
 const Header = () => {
   const { data: session, status } = useSession();
-  console.log(session);
 
   if (status === "loading") {
-    return "";
+    return <HeaderSkeleton></HeaderSkeleton>;
   }
 
   return (
