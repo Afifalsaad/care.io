@@ -12,7 +12,6 @@ export async function generateMetadata({ params }) {
     `select * from services where id = ${id}`
   );
   const result = product[0];
-  console.log("from metadata", result);
 
   if (!product) {
     return {
