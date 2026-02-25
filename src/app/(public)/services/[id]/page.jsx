@@ -15,18 +15,17 @@ export async function generateMetadata({ params }) {
 
   if (!product) {
     return {
-      title: "Product Not Found",
-      description: "The product you are looking for does not exist.",
+      title: "Service Not Found",
+      description: "The service you are looking for does not exist.",
     };
   }
 
   const { title, bangla, image, description } = result;
-  const pageTitle = `${title} | Hero Kidz`;
+  const pageTitle = `${title} | care.IO`;
 
   return {
     title: pageTitle,
-    description:
-      description || bangla || "Check out this amazing product on Hero Kidz.",
+    description: description || bangla || "Find your best services.",
     url: `https://yourapp.com/product/${id}`,
     image: image || "https://i.ibb.co.com/s9brDwvd",
     type: "product",
