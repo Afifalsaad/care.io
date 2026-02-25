@@ -135,7 +135,7 @@ const MyOrders = () => {
                       {d.status === "paid" ? (
                         <button
                           disabled
-                          className="cursor-pointer disabled:cursor-not-allowed text-[#9af19a] font-medium mr-3">
+                          className="cursor-pointer disabled:cursor-not-allowed text-muted-foreground font-medium mr-3">
                           Payment
                         </button>
                       ) : (

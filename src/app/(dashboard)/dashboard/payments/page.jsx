@@ -1,10 +1,10 @@
-import PaymentsHistory from "@/Components/Dashboard/PaymentsHistory";
+import PaymentsTable from "@/Components/Dashboard/PaymentsTable";
 import React from "react";
 
 const Payments = () => {
   return (
     <div>
-      <PaymentsHistory></PaymentsHistory>
+      <PaymentsTable></PaymentsTable>
     </div>
   );
 };
