@@ -21,10 +21,6 @@ const MyOrders = () => {
   const { data: session, status } = useSession();
   const [bookings, setBookings] = useState([]);
 
-  const handlePayment = () => {
-    console.log("clicked");
-  };
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -136,9 +132,17 @@ const MyOrders = () => {
                 <td className="px-4 py-4 text-sm">
                   <AlertDialog>
                     <AlertDialogTrigger asChild>
-                      <button className="cursor-pointer text-blue-600 font-medium mr-3">
-                        View Details
-                      </button>
+                      {d.status === "paid" ? (
+                        <button
+                          disabled
+                          className="cursor-pointer disabled:cursor-not-allowed text-[#9af19a] font-medium mr-3">
+                          Payment
+                        </button>
+                      ) : (
+                        <button className="cursor-pointer hover:underline text-[#40ce40] font-medium mr-3">
+                          Payment
+                        </button>
+                      )}
                     </AlertDialogTrigger>
                     <AlertDialogContent>
                       <AlertDialogHeader>

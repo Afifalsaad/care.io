@@ -1,7 +1,7 @@
-import { loadStripe } from "@stripe/stripe-js";
 import React from "react";
 
 const PayButton = ({ data }) => {
+  // console.log(data);
   const handlePayment = async () => {
     const res = await fetch("/api/create-checkout-session", {
       method: "POST",
@@ -9,11 +9,8 @@ const PayButton = ({ data }) => {
       body: JSON.stringify(data),
     });
     const result = await res.json();
-    console.log("from PayButton", result);
+    console.log(data);
 
-    // const stripe = await loadStripe(
-    //   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
-    // );
     window.location.assign(result.url);
   };
   return (

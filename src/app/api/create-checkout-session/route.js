@@ -23,6 +23,9 @@ export async function POST(req) {
     metadata: {
       serviceID: body.id,
       serviceName: body.service,
+      userName: body.name,
+      userName: body.name,
+      userEmail: body.email,
     },
     success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/dashboard/myOrders`,
     cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/dashboard/myOrders`,

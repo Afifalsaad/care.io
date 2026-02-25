@@ -2,12 +2,6 @@ import Stripe from "stripe";
 import { dbConnect } from "@/lib/dbConnect";
 import { headers } from "next/headers";
 
-// export const config = {
-//   api: {
-//     bodyParser: false,
-//   },
-// };
-
 const stripe = new Stripe(process.env.PAYMENT_SECRET_KEY);
 
 export async function POST(req) {
@@ -29,21 +23,33 @@ export async function POST(req) {
 
   if (event.type === "checkout.session.completed") {
     const session = event.data.object;
+    console.log("from webhook session", session);
 
     // MySQL Connection
     await dbConnect.execute(
       `INSERT INTO payment_history
-            (user_id, order_id, transaction_id, amount, currency, payment_status)
-            VALUES (?, ?, ?, ?, ?, ?)`,
+            (user_email, user_name, order_id, service_name, transaction_id, amount, currency, payment_status)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
       [
-        session.id,
+        session.metadata.userEmail,
+        session.metadata.userName,
         session.metadata.serviceID,
+        session.metadata.serviceName,
         session.payment_intent,
         session.amount_total,
         session.currency,
         session.payment_status,
       ]
     );
+
+    try {
+      await dbConnect.execute("update bookings set status = ? where id = ?", [
+        session.payment_status,
+        session.metadata.serviceID,
+      ]);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return new Response(JSON.stringify({ received: true }), { status: 200 });

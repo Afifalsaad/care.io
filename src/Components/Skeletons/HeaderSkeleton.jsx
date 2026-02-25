@@ -4,7 +4,7 @@ const HeaderSkeleton = () => {
   return (
     <div>
       <div className="w-full">
-        <header className="z-50 sticky top-0 pt-4 bg-white/50 animate-pulse">
+        <header className="z-50 sticky top-0 pt-4 animate-pulse">
           <div className="flex flex-wrap items-center px-6 py-2 shadow-md min-h-14 rounded-md w-full relative">
             <div className="flex items-center flex-wrap gap-x-8 gap-y-4 z-50 w-full">
               {/* Search Bar Skeleton */}
