@@ -6,6 +6,60 @@ import { Banknote, CheckCircle, Clock } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 
+export async function generateMetadata({ params }) {
+  const { id } = await params;
+  const [product] = await dbConnect.execute(
+    `select * from services where id = ${id}`
+  );
+  const result = product[0];
+  console.log("from metadata", result);
+
+  if (!product) {
+    return {
+      title: "Product Not Found",
+      description: "The product you are looking for does not exist.",
+    };
+  }
+
+  const { title, bangla, image, description } = result;
+  const pageTitle = `${title} | Hero Kidz`;
+
+  return {
+    title: pageTitle,
+    description:
+      description || bangla || "Check out this amazing product on Hero Kidz.",
+    url: `https://yourapp.com/product/${id}`,
+    image: image || "https://i.ibb.co.com/s9brDwvd",
+    type: "product",
+    openGraph: {
+      title: pageTitle,
+      description: description || bangla,
+      url: `https://yourapp.com/product/${id}`,
+      site_name: "Hero Kidz",
+      images: [
+        {
+          url: image || "https://i.ibb.co.com/s9brDwvd",
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
+      locale: "en_US",
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      site: "@YourTwitterHandle",
+      creator: "@YourTwitterHandle",
+      title: pageTitle,
+      description: description || bangla,
+      images: [image || "https://i.ibb.co.com/s9brDwvd"],
+    },
+    robots: "index, follow",
+    keywords: ["product", "e-commerce", "react", "next.js", "mern"],
+  };
+}
+
 const ServiceDetails = async ({ params }) => {
   const { id } = await params;
   const [rows] = await dbConnect.execute(

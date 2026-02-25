@@ -8,7 +8,6 @@ import Link from "next/link";
 const BookButton = ({ result }) => {
   const user = useSession();
   const router = useRouter();
-  console.log(result);
 
   const bookService = () => {
     if (user.status !== "authenticated") {
