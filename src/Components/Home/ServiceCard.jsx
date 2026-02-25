@@ -34,7 +34,9 @@ const ServiceCard = async () => {
                 {/* <Badge variant="secondary">Featured</Badge> */}
               </CardAction>
               <CardTitle className="mt-2">{service.title}</CardTitle>
-              <CardDescription>{service.short_description}</CardDescription>
+              <CardDescription className="text-primary">
+                {service.short_description}
+              </CardDescription>
             </CardHeader>
 
             <CardFooter>

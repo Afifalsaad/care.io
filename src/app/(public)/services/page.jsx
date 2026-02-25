@@ -1,6 +1,4 @@
 import ServiceCard from "@/Components/Home/ServiceCard";
-import { dbConnect } from "@/lib/dbConnect";
-import { useSession } from "next-auth/react";
 import React from "react";
 
 const Services = async () => {

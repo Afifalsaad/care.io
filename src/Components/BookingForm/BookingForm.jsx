@@ -38,14 +38,7 @@ const BookingForm = ({ id }) => {
   const [unit, setUnit] = useState("hours");
   const router = useRouter();
   const user = useSession();
-  const pathName = usePathname();
   const isExist = user?.data?.user;
-
-  useEffect(() => {
-    if (user.status !== "authenticated" && user.status !== "loading") {
-      router.push(`/login?callbackUrl=${pathName}`);
-    }
-  }, [router, user, pathName]);
 
   useEffect(() => {
     setIsMounted(true);
@@ -151,7 +144,7 @@ const BookingForm = ({ id }) => {
           <CardTitle className="text-3xl font-extrabold text-secondary">
             Book Our Service
           </CardTitle>
-          <CardDescription className="text-base">
+          <CardDescription className="text-gray-500">
             Chooser your preferred service and time.
           </CardDescription>
         </CardHeader>
@@ -284,7 +277,7 @@ const BookingForm = ({ id }) => {
               {/* --- 3. Dynamic Total Cost & Summary --- */}
               <div className="p-4 bg-secondary/10 rounded-xl border border-dashed border-secondary/50 text-sm mt-6 space-y-2">
                 <p className="flex justify-between">
-                  <span className="text-muted-foreground">Date & Time:</span>
+                  <span>Date & Time:</span>
                   <span className="font-semibold">
                     {date ? date.toDateString() : "Select Date"} at{" "}
                     {selectedTime || "Time"}
@@ -292,7 +285,7 @@ const BookingForm = ({ id }) => {
                 </p>
 
                 <p className="flex justify-between">
-                  <span className="text-muted-foreground">Duration:</span>
+                  <span>Duration:</span>
                   <span className="font-semibold">
                     {duration || 0} {unit}
                   </span>

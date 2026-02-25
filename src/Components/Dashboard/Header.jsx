@@ -1,5 +1,5 @@
 "use client";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -60,7 +60,9 @@ const Header = () => {
                     </Link>
                     <hr className="my-2 -mx-2 border-gray-200" />
 
-                    <button className="text-[15px] font-medium cursor-pointer flex items-center p-2 rounded-md hover:bg-muted w-full dropdown-item transition duration-300 ease-in-out">
+                    <button
+                      onClick={() => signOut()}
+                      className="text-[15px] font-medium cursor-pointer flex items-center p-2 rounded-md hover:bg-muted w-full dropdown-item transition duration-300 ease-in-out">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         className="w-4.5 h-4.5 mr-3 fill-current"

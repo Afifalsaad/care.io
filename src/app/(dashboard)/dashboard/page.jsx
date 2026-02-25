@@ -1,4 +1,3 @@
-import Banner from "@/Components/Home/Banner";
 import React from "react";
 
 const dashBoard = () => {

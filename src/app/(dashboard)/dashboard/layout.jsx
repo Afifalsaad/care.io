@@ -4,7 +4,7 @@ import Sidebar from "@/Components/Dashboard/Sidebar";
 import NextAuthProvider from "@/provider/NextAuthProvider";
 import React from "react";
 
-const DAshboardLayout = async ({ children }) => {
+const DashboardLayout = async ({ children }) => {
   return (
     <div>
       <NextAuthProvider>
@@ -27,4 +27,4 @@ const DAshboardLayout = async ({ children }) => {
   );
 };
 
-export default DAshboardLayout;
+export default DashboardLayout;

@@ -87,7 +87,7 @@ const Sidebar = () => {
                     <Link
                       href="/dashboard/payments"
                       className="block text-primary text-[15px] hover:bg-muted rounded-md px-3 py-2">
-                      Payments
+                      Payment History
                     </Link>
                   )}
                 </ul>
