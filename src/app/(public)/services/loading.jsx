@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, CardFooter, CardHeader } from "@/components/ui/card";
+import { Card, CardFooter, CardHeader } from "@/Components/ui/card";
 import { Skeleton } from "@/Components/ui/skeleton";
 
 const ServiceCardSkeleton = () => {

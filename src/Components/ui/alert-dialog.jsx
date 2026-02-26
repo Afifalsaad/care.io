@@ -4,7 +4,7 @@ import * as React from "react";
 import { AlertDialog as AlertDialogPrimitive } from "radix-ui";
 
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/Components/ui/button";
 
 function AlertDialog({ ...props }) {
   return <AlertDialogPrimitive.Root data-slot="alert-dialog" {...props} />;
@@ -95,7 +95,7 @@ function AlertDialogDescription({ className, ...props }) {
   return (
     <AlertDialogPrimitive.Description
       data-slot="alert-dialog-description"
-      className={cn(" text-sm", className)}
+      className={cn("text-sm", className)}
       {...props}
     />
   );

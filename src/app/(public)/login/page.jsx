@@ -1,10 +1,12 @@
 import LoginForm from "@/Components/AuthLayout/LoginForm";
-import React from "react";
+import React, { Suspense } from "react";
 
 const Login = () => {
   return (
     <div>
-      <LoginForm></LoginForm>
+      <Suspense>
+        <LoginForm></LoginForm>
+      </Suspense>
     </div>
   );
 };

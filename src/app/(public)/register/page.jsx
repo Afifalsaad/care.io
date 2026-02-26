@@ -1,10 +1,12 @@
 import RegistrationForm from "@/Components/AuthLayout/RegistrationForm";
-import React from "react";
+import React, { Suspense } from "react";
 
 const Register = () => {
   return (
     <div>
-      <RegistrationForm></RegistrationForm>
+      <Suspense>
+        <RegistrationForm></RegistrationForm>
+      </Suspense>
     </div>
   );
 };
