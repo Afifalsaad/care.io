@@ -8,10 +8,10 @@ const AboutUs = () => {
         <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-20">
           {/* Header */}
           <div className="text-center max-w-3xl mb-12">
-            <h2 className="text-2xl font-bold text-left text-primary mb-4">
+            <h2 className="text-2xl font-bold text-left mb-4">
               About Our Care Services
             </h2>
-            <p className="text-primary sm:text-sm text-left">
+            <p className="sm:text-sm text-left">
               We provide trusted babysitting and elderly care services, ensuring
               safety, <br /> comfort, and compassion for your loved ones at
               home.
@@ -32,7 +32,7 @@ const AboutUs = () => {
 
             {/* Text Content */}
             <div className="space-y-6">
-              <h3 className="text-2xl font-semibold text-primary">
+              <h3 className="text-2xl font-semibold">
                 Compassionate Care for Every Generation
               </h3>
               <p className="text-primary">
